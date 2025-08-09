@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Rajacuan YouTube Pack Generator</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+        :root {
+            --bg: #0f1115;
+            --panel: #161a22;
+            --muted: #8a93a5;
+            --text: #e8ecf3;
+            --brand: #4f7cff;
+            --ok: #20c997;
+            --warn: #ffb020;
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font: 14px/1.55 system-ui, Segoe UI, Roboto, Inter, Arial
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 16px
+        }
+
+        header {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px
+        }
+
+        h1 {
+            font-size: 22px;
+            margin: 0
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid #1f2530;
+            border-radius: var(--radius);
+            padding: 16px
+        }
+
+        .grid {
+            display: grid;
+            gap: 16px
+        }
+
+        .grid.cols-2 {
+            grid-template-columns: repeat(2, 1fr)
+        }
+
+        .grid.cols-3 {
+            grid-template-columns: repeat(3, 1fr)
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid #282f3c;
+            background: #0d1016;
+            color: var(--text);
+            outline: none;
+            transition: border .15s;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: var(--brand)
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap
+        }
+
+        .btn {
+            appearance: none;
+            border: 1px solid #2b3342;
+            background: #1a2030;
+            color: #eaf0ff;
+            border-radius: 10px;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all .15s;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            border-color: var(--brand);
+            box-shadow: 0 6px 20px #0006
+        }
+
+        .btn.primary {
+            background: var(--brand);
+            border-color: #2e5bff;
+            color: #fff
+        }
+
+        .btn.ok {
+            background: var(--ok);
+            border-color: #12b886
+        }
+
+        .btn.ghost {
+            background: transparent
+        }
+
+        .hint {
+            color: var(--muted);
+            font-size: 12px
+        }
+
+        .out {
+            display: grid;
+            gap: 16px;
+            margin-top: 16px
+        }
+
+        .item {
+            background: #0d1016;
+            border: 1px solid #222738;
+            border-radius: 12px;
+            padding: 14px
+        }
+
+        .item h3 {
+            margin: 0 0 8px;
+            font-size: 15px
+        }
+
+        .mono {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            background: #0a0c12;
+            border: 1px solid #1b2130;
+            border-radius: 8px;
+            padding: 10px;
+            white-space: pre-wrap
+        }
+
+        .pill {
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #0d1320;
+            border: 1px solid #24304a;
+            color: #b7c3e1;
+            font-weight: 600
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px
+        }
+
+        .sep {
+            height: 1px;
+            background: #1d2330;
+            margin: 14px 0
+        }
+
+        footer {
+            margin: 32px 0;
+            color: #9aa3b7;
+            text-align: center
+        }
+
+        @media (max-width:900px) {
+            .grid.cols-3 {
+                grid-template-columns: 1fr
+            }
+
+            .grid.cols-2 {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <h1>Rajacuan YouTube Pack Generator</h1>
+            <div class="row">
+                <button id="btnExport" class="btn">Export .txt</button>
+                <button id="btnClear" class="btn ghost">Clear Output</button>
+            </div>
+        </header>
+
+        <div class="card">
+            <div class="grid cols-3">
+                <div>
+                    <label>Game (alias atau nama)</label>
+                    <input id="inpGame" type="text" placeholder="Contoh: go / mw / &quot;Mobile Legends&quot;" />
+                    <div class="hint">Ketik <strong>--list</strong> di bawah buat lihat alias.</div>
+                </div>
+                <div>
+                    <label>Tanggal/Label</label>
+                    <input id="inpDate" type="text" value="Hari Ini" />
+                    <div class="hint">Akan mengganti <code>{DATE}</code> di judul & deskripsi.</div>
+                </div>
+                <div>
+                    <label>Jumlah Variasi</label>
+                    <input id="inpCount" type="number" min="1" value="5" />
+                    <div class="hint">Semakin besar → kombinasi makin banyak.</div>
+                </div>
+            </div>
+
+            <div class="grid cols-2" style="margin-top:16px">
+                <div>
+                    <label>CTA Link</label>
+                    <input id="inpLink" type="text" value="https://www.huntsvilleskiclub.org/" />
+                </div>
+                <div>
+                    <label>Opsi</label>
+                    <div class="row">
+                        <label class="pill"><input id="chkMLPUBG" type="checkbox" checked
+                                style="margin-right:8px">Campur hashtag MLBB/PUBG</label>
+                        <label class="pill"><input id="chkHybrid" type="checkbox" style="margin-right:8px">Paksa mode
+                            deskripsi Hybrid</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:16px">
+                <button id="btnList" class="btn">Tampilkan Alias (--list)</button>
+                <button id="btnGenerate" class="btn primary">Generate</button>
+                <span id="status" class="hint"></span>
+            </div>
+        </div>
+
+        <div id="aliasBox" class="card" style="display:none;margin-top:16px"></div>
+
+        <div class="card" style="margin-top:16px">
+            <div class="row" style="justify-content:space-between;">
+                <h2 style="margin:0;font-size:16px">Output</h2>
+                <button id="btnCopyAll" class="btn ok">Copy Semua Output</button>
+            </div>
+            <div id="out" class="out"></div>
+        </div>
+
+        <footer>Made for blitz ops. No framework. All client-side.</footer>
+    </div>
+
+    <script src="generate.js"></script>
+</body>
+
+</html>
