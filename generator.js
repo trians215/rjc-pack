@@ -1,37 +1,37 @@
-// ====== DATA MASTER (alias game) ======
+/* ====== DATA MASTER (alias game) ====== */
 const PRESETS = {
   // PG Soft
-  mw: "Mahjong Ways", mw2: "Mahjong Ways 2", ln: "Lucky Neko", wb: "Wild Bandito",
-  sp: "Starlight Princess", sp1000: "Starlight Princess 1000", wf: "Wild Fireworks",
-  wn: "Win Win Fish Prawn Crab", wm: "Wild Coaster", dw: "Dragon Tiger Luck",
-  qh: "Queen of Bounty", hown: "Heist Stakes", jg: "Journey to the Wealth",
+  mw:"Mahjong Ways", mw2:"Mahjong Ways 2", ln:"Lucky Neko", wb:"Wild Bandito",
+  sp:"Starlight Princess", sp1000:"Starlight Princess 1000", wf:"Wild Fireworks",
+  wn:"Win Win Fish Prawn Crab", wm:"Wild Coaster", dw:"Dragon Tiger Luck",
+  qh:"Queen of Bounty", hown:"Heist Stakes", jg:"Journey to the Wealth",
   // Pragmatic
-  go: "Gates of Olympus", go2: "Gates of Olympus 1000", sb: "Sweet Bonanza",
-  sbo: "Sweet Bonanza Xmas", sbr: "Sugar Rush", db: "Dog House", dbm: "Dog House Megaways",
-  bn: "Bonanza Gold", wp: "Wild West Gold", wpm: "Wild West Gold Megaways",
-  jj: "Joker Jewels", tf: "5 Lions Megaways", st: "Starlight Christmas",
-  bbf: "Bigger Bass Bonanza", bb: "Big Bass Bonanza", bbs: "Big Bass Splash",
-  bba: "Big Bass Amazon Xtreme",
+  go:"Gates of Olympus", go2:"Gates of Olympus 1000", sb:"Sweet Bonanza",
+  sbo:"Sweet Bonanza Xmas", sbr:"Sugar Rush", db:"Dog House", dbm:"Dog House Megaways",
+  bn:"Bonanza Gold", wp:"Wild West Gold", wpm:"Wild West Gold Megaways",
+  jj:"Joker Jewels", tf:"5 Lions Megaways", st:"Starlight Christmas",
+  bbf:"Bigger Bass Bonanza", bb:"Big Bass Bonanza", bbs:"Big Bass Splash",
+  bba:"Big Bass Amazon Xtreme",
   // Lain-lain
-  bh: "Brothers Kingdom", gd: "Gold Panther", koi: "Koi Gate", fa: "Fa Cai Shen",
-  lm: "Lucky Twins", mm: "Mega Moolah", q9mw: "Marvelous Wonderland", q9fh: "Fa Hong",
-  ds: "Dead or a Wild", mmx: "Money Train 3", wby: "Wild Bounty", wbh: "Wild Bounty Hunters",
-  st2: "Starburst XXXtreme", sbt: "Starburst", az: "Aztec Gems", azd: "Aztec Gems Deluxe",
-  sk: "Sugar Bonanza", bj: "Blackjack", pk: "Poker", rlt: "Roulette",
+  bh:"Brothers Kingdom", gd:"Gold Panther", koi:"Koi Gate", fa:"Fa Cai Shen",
+  lm:"Lucky Twins", mm:"Mega Moolah", q9mw:"Marvelous Wonderland", q9fh:"Fa Hong",
+  ds:"Dead or a Wild", mmx:"Money Train 3", wby:"Wild Bounty", wbh:"Wild Bounty Hunters",
+  st2:"Starburst XXXtreme", sbt:"Starburst", az:"Aztec Gems", azd:"Aztec Gems Deluxe",
+  sk:"Sugar Bonanza", bj:"Blackjack", pk:"Poker", rlt:"Roulette",
   // Mobile
-  ml: "Mobile Legends", pubg: "PUBG Mobile",
+  ml:"Mobile Legends", pubg:"PUBG Mobile",
 };
-const NAME_TO_ALIAS = Object.fromEntries(Object.entries(PRESETS).map(([a,n]) => [n.toLowerCase(), a]));
+const NAME_TO_ALIAS = Object.fromEntries(Object.entries(PRESETS).map(([a,n])=>[n.toLowerCase(),a]));
 
-// ====== UTIL ======
-const rand = (min,max)=>Math.floor(Math.random()*(max-min+1))+min;
-const pick = arr => arr[Math.floor(Math.random()*arr.length)];
-const shuffle = arr => { const a=arr.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]} return a; };
-const take = (arr,n)=>shuffle(arr).slice(0,Math.min(n,arr.length));
-const limit = (s,n=100)=>s.length>n ? s.slice(0, n-1)+'…' : s; // limiter judul 100 char
+/* ====== UTIL ====== */
+const rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a, pick=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{const x=a.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]]}return x};
+const take=(a,n)=>shuffle(a).slice(0,Math.min(n,a.length));
+const limit=(s,n=100)=>s.length>n?s.slice(0,n-1)+'…':s;
+const slugify=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
 
-// ====== VARIANTS ======
-const titleVariants = [
+/* ====== VARIANTS (YouTube) ====== */
+const titleVariants=[
   "Rajacuan - Jadwal Live {DATE} Mabar Seru {GAME} Tergacor",
   "Rajacuan Live {DATE} - Mabar Bareng Komunitas {GAME}",
   "Rajacuan Gaspol {GAME} {DATE} - Mabar Seru Sepanjang Hari",
@@ -72,8 +72,7 @@ const titleVariants = [
   "Rajacuan {DATE} - Push Mabar {GAME} Anti Stop",
   "Rajacuan - Live {GAME} {DATE} Versi Gaming Community",
 ];
-
-const ctaLines = [
+const ctaLines=[
   "Login sekarang dan rasakan sensasinya di {LINK}",
   "Join sekarang juga lewat {LINK} dan mulai petualanganmu",
   "Klik {LINK} untuk langsung gabung dan main bareng",
@@ -114,8 +113,7 @@ const ctaLines = [
   "Gas bareng tim di {LINK} sekarang juga",
   "Buka {LINK} dan nikmati hiburan gaming top",
 ];
-
-const benefitsPool = [
+const benefitsPool=[
   "Event eksklusif dan promo baru setiap minggu",
   "Hadiah besar dan bonus harian untuk semua pemain",
   "Komunitas solid, aktif, dan ramah pemain baru",
@@ -156,251 +154,76 @@ const benefitsPool = [
   "Notifikasi real-time untuk event penting",
   "Sistem anti-cheat canggih untuk fair play",
 ];
-
-// 30 deskripsi
-const descriptionBlocks = [
-`Hari ini kita mabar seru bareng di Rajacuan!
+const descriptionBlocks=[`Hari ini kita mabar seru bareng di Rajacuan!
 Siapkan strategi terbaik, kumpulkan kemenangan, dan rasakan keseruan bermain di {GAME} yang lagi panas.
-Suasana live kali ini bakal bikin tegang sekaligus seru, mirip turnamen mabar komunitas yang penuh kejutan.`,
-`Rajacuan kembali live {DATE}!
+Suasana live kali ini bakal bikin tegang sekaligus seru, mirip turnamen mabar komunitas yang penuh kejutan.`, `Rajacuan kembali live {DATE}!
 {GAME} lagi ramai dan siap bikin momen mabar makin seru.
-Jangan ketinggalan tiap putaran yang penuh kejutan — vibe-nya seperti scrim komunitas kompetitif.`,
-`Mabar bareng Rajacuan sekarang!
+Jangan ketinggalan tiap putaran yang penuh kejutan — vibe-nya seperti scrim komunitas kompetitif.`, `Mabar bareng Rajacuan sekarang!
 {GAME} lagi hot, cocok buat seru-seruan sambil adu strategi.
-Live bakal penuh aksi dan momentum kemenangan yang sayang dilewatkan.`,
-`Kita gas {GAME} {DATE} dengan format mabar santai ala komunitas.
+Live bakal penuh aksi dan momentum kemenangan yang sayang dilewatkan.`, `Kita gas {GAME} {DATE} dengan format mabar santai ala komunitas.
 Tujuan kita simple: have fun, build momentum, dan push kemenangan bareng-bareng.
-Kalem tapi tajam — itu gaya main kita di Rajacuan.`,
-`Live {GAME} {DATE} di Rajacuan siap kasih hiburan plus tantangan.
-Nikmati serunya gameplay, cek strategi baru, dan ikutan interaksi chat langsung dengan player lainnya.`,
-`Rajacuan mengundang semua player untuk mabar {GAME} {DATE}.
-Rasakan atmosfer seperti kompetisi resmi tapi dengan suasana santai dan friendly.`,
-`{GAME} hari ini lagi meta banget!
-Di Rajacuan, kita bakal main bareng dan bahas trik-trik kecil yang bikin gameplay makin solid.`,
-`Siapa yang siap bawa pulang kemenangan hari ini?
-Rajacuan live {GAME} {DATE}, pastikan lo ikut dari awal sampe akhir.`,
-`Main bareng Rajacuan itu selalu beda.
-{GAME} kali ini bakal kita bawa ke level yang lebih seru dengan strategi baru yang belum pernah dibahas.`,
-`Rajacuan siap nemenin sore lo dengan mabar {GAME}.
-Ngobrol, main, dan nikmatin momen bareng komunitas tanpa tekanan.`,
-`Saatnya kita unjuk gigi di {GAME} {DATE}.
-Rajacuan bakal live, siap kasih momen epic dan tawa ngakak bareng.`,
-`{GAME} hari ini di Rajacuan nggak cuma soal menang.
-Ini tentang kebersamaan dan keseruan mabar bareng orang-orang gokil di komunitas.`,
-`Rajacuan live lagi {DATE}!
-{GAME} bakal jadi arena kita uji mekanik sambil nyari momen lucu di tengah game.`,
-`Gaspol {GAME} di Rajacuan!
-Live {DATE} ini bakal penuh kejutan dan strategi out of the box.`,
-`Rajacuan hadir bawa vibe turnamen di mabar {GAME}.
-Persiapkan mental dan koneksi internet, ini bakal seru banget.`,
-`Hari ini kita all-in di {GAME}.
-Rajacuan live {DATE} bakal jadi cerita seru yang lo nggak mau skip.`,
-`Ngopi sore sambil mabar {GAME} di Rajacuan, itu baru definisi healing yang bener.
-Join live kita {DATE}!`,
-`Rajacuan ngajak semua player untuk gabung di live {GAME}.
-Santai tapi tetep kompetitif, cocok buat semua level player.`,
-`Biarpun santai, {GAME} hari ini di Rajacuan bakal bikin deg-degan.
-Ikuti setiap match biar nggak ketinggalan momen epic.`,
-`{GAME} {DATE} ini spesial karena kita bakal coba strategi unik.
-Rajacuan siap buktiin kalau fun dan menang bisa jalan bareng.`,
-`Rajacuan hadir lagi, bawa energi positif di mabar {GAME}.
-Persiapkan jempol lo, karena ini bakal intense.`,
-`Live kali ini kita fokus di teamwork dan komunikasi.
-{GAME} di Rajacuan {DATE} akan jadi pelajaran dan hiburan.`,
-`Nggak cuma gameplay, Rajacuan {GAME} {DATE} juga bakal ada sesi Q&A santai sama komunitas.`,
-`Rajacuan siap bawain suasana ala arena pro player ke mabar {GAME}.
-Cobain vibe kompetitif yang tetep fun.`,
-`{GAME} di Rajacuan {DATE} cocok banget buat lo yang cari hiburan after kerja.
-Santai, interaktif, dan penuh aksi.`,
-`Rajacuan bakal eksperimen strategi gila-gilaan di {GAME}.
-Siap-siap ketawa sekaligus terkejut liat hasilnya.`,
-`Hari ini kita main {GAME} di Rajacuan sambil bagi tips rahasia.
-Biar semua bisa improve skill bareng-bareng.`,
-`{GAME} {DATE} di Rajacuan bukan cuma main, tapi juga nge-build chemistry bareng viewer.`,
-`Rajacuan live lagi, kali ini kita main {GAME} sambil push target harian.
-Siapa tau ada bonus kejutan di akhir.`,
-`Mabar di Rajacuan itu selalu unpredictable.
-{GAME} kali ini bakal buktiin kenapa komunitas ini nggak pernah bosen.`,
-`Rajacuan {DATE} siap kasih pengalaman mabar {GAME} yang beda dari biasanya.
-Jangan sampe kelewatan!`,
-];
+Kalem tapi tajam — itu gaya main kita di Rajacuan.`, `Live {GAME} {DATE} di Rajacuan siap kasih hiburan plus tantangan.
+Nikmati serunya gameplay, cek strategi baru, dan ikutan interaksi chat langsung dengan player lainnya.`, `Rajacuan mengundang semua player untuk mabar {GAME} {DATE}.
+Rasakan atmosfer seperti kompetisi resmi tapi dengan suasana santai dan friendly.`, `{GAME} hari ini lagi meta banget!
+Di Rajacuan, kita bakal main bareng dan bahas trik-trik kecil yang bikin gameplay makin solid.`, `Siapa yang siap bawa pulang kemenangan hari ini?
+Rajacuan live {GAME} {DATE}, pastikan lo ikut dari awal sampe akhir.`, `Main bareng Rajacuan itu selalu beda.
+{GAME} kali ini bakal kita bawa ke level yang lebih seru dengan strategi baru yang belum pernah dibahas.`, `Rajacuan siap nemenin sore lo dengan mabar {GAME}.
+Ngobrol, main, dan nikmatin momen bareng komunitas tanpa tekanan.`, `Saatnya kita unjuk gigi di {GAME} {DATE}.
+Rajacuan bakal live, siap kasih momen epic dan tawa ngakak bareng.`, `{GAME} hari ini di Rajacuan nggak cuma soal menang.
+Ini tentang kebersamaan dan keseruan mabar bareng orang-orang gokil di komunitas.`, `Rajacuan live lagi {DATE}!
+{GAME} bakal jadi arena kita uji mekanik sambil nyari momen lucu di tengah game.`, `Gaspol {GAME} di Rajacuan!
+Live {DATE} ini bakal penuh kejutan dan strategi out of the box.`, `Rajacuan hadir bawa vibe turnamen di mabar {GAME}.
+Persiapkan mental dan koneksi internet, ini bakal seru banget.`, `Hari ini kita all-in di {GAME}.
+Rajacuan live {DATE} bakal jadi cerita seru yang lo nggak mau skip.`, `Ngopi sore sambil mabar {GAME} di Rajacuan, itu baru definisi healing yang bener.
+Join live kita {DATE}!`, `Rajacuan ngajak semua player untuk gabung di live {GAME}.
+Santai tapi tetep kompetitif, cocok buat semua level player.`, `Biarpun santai, {GAME} hari ini di Rajacuan bakal bikin deg-degan.
+Ikuti setiap match biar nggak ketinggalan momen epic.`, `{GAME} {DATE} ini spesial karena kita bakal coba strategi unik.
+Rajacuan siap buktiin kalau fun dan menang bisa jalan bareng.`, `Rajacuan hadir lagi, bawa energi positif di mabar {GAME}.
+Persiapkan jempol lo, karena ini bakal intense.`, `Live kali ini kita fokus di teamwork dan komunikasi.
+{GAME} di Rajacuan {DATE} akan jadi pelajaran dan hiburan.`, `Nggak cuma gameplay, Rajacuan {GAME} {DATE} juga bakal ada sesi Q&A santai sama komunitas.`, `Rajacuan siap bawain suasana ala arena pro player ke mabar {GAME}.
+Cobain vibe kompetitif yang tetep fun.`, `{GAME} di Rajacuan {DATE} cocok banget buat lo yang cari hiburan after kerja.
+Santai, interaktif, dan penuh aksi.`, `Rajacuan bakal eksperimen strategi gila-gilaan di {GAME}.
+Siap-siap ketawa sekaligus terkejut liat hasilnya.`, `Hari ini kita main {GAME} di Rajacuan sambil bagi tips rahasia.
+Biar semua bisa improve skill bareng-bareng.`, `{GAME} {DATE} di Rajacuan bukan cuma main, tapi juga nge-build chemistry bareng viewer.`, `Rajacuan live lagi, kali ini kita main {GAME} sambil push target harian.
+Siapa tau ada bonus kejutan di akhir.`, `Mabar di Rajacuan itu selalu unpredictable.
+{GAME} kali ini bakal buktiin kenapa komunitas ini nggak pernah bosen.`, `Rajacuan {DATE} siap kasih pengalaman mabar {GAME} yang beda dari biasanya.
+Jangan sampe kelewatan!`];
 
-// Hashtags
-const rajacuanCoreHashtags = ['#Rajacuan','#MabarRajacuan','#RajacuanLive','#Rajacuan2025','#RajacuanGacor','#MabarHariIni','#GameOnlineSeru'];
-const hashtagsPool = [
-  "#MobileLegends","#MLBB","#MLBBIndonesia","#MLBBEsports","#MLBBMabar",
-  "#MobileLegendsBangBang","#MLBBGameplay","#MLBBLive","#MLBBPro","#MLBBMatch",
-  "#MabarMLBB","#MLBBHighlight","#MLBBPushRank","#MLBBFans","#MLBBStrategy",
-  "#MLBBUpdate","#MLBBKompetitif","#MLBBSquad","#MLBBTurnamen","#MLBBSeru",
-  "#PUBGMobile","#PUBGM","#PUBGIndonesia","#PUBGMobileID","#PUBGMobileLive",
-  "#PUBGGameplay","#PUBGSquad","#PUBGPushRank","#PUBGPro","#PUBGMatch",
-  "#PUBGTurnamen","#PUBGHighlight","#PUBGEsports","#PUBGKompetitif","#PUBGSeru",
-  "#PUBGMobileTips","#PUBGMabar","#PUBGUpdate","#PUBGLiveStreaming","#PUBGLovers",
-  "#GameMobile","#MobileGaming","#GamingIndonesia","#MabarOnline","#SquadGaming",
-  "#GameLive","#GameEsports","#ProPlayer","#EsportsIndonesia","#KomunitasGaming",
-];
+const rjCore=['#Rajacuan','#MabarRajacuan','#RajacuanLive','#Rajacuan2025','#RajacuanGacor','#MabarHariIni','#GameOnlineSeru'];
+const hashtagsPool=[ "#MobileLegends","#MLBB","#MLBBIndonesia","#MLBBEsports","#MLBBMabar","#MobileLegendsBangBang","#MLBBGameplay","#MLBBLive","#MLBBPro","#MLBBMatch","#MabarMLBB","#MLBBHighlight","#MLBBPushRank","#MLBBFans","#MLBBStrategy","#MLBBUpdate","#MLBBKompetitif","#MLBBSquad","#MLBBTurnamen","#MLBBSeru","#PUBGMobile","#PUBGM","#PUBGIndonesia","#PUBGMobileID","#PUBGMobileLive","#PUBGGameplay","#PUBGSquad","#PUBGPushRank","#PUBGPro","#PUBGMatch","#PUBGTurnamen","#PUBGHighlight","#PUBGEsports","#PUBGKompetitif","#PUBGSeru","#PUBGMobileTips","#PUBGMabar","#PUBGUpdate","#PUBGLiveStreaming","#PUBGLovers","#GameMobile","#MobileGaming","#GamingIndonesia","#MabarOnline","#SquadGaming","#GameLive","#GameEsports","#ProPlayer","#EsportsIndonesia","#KomunitasGaming" ];
 
-// ====== BUILDERS ======
-function resolveGame(input){
-  if(!input) return null;
-  const key = input.trim();
-  if(PRESETS[key.toLowerCase()]) return PRESETS[key.toLowerCase()];
-  if(NAME_TO_ALIAS[key.toLowerCase()]) return PRESETS[NAME_TO_ALIAS[key.toLowerCase()]];
-  const hit = Object.values(PRESETS).find(n=>n.toLowerCase().includes(key.toLowerCase()));
-  return hit || key;
-}
-function buildHashtags(game,mix=true){
-  const g=game.replace(/\s+/g,'');
-  const gameTags=[`#${g}`,`#${g}Tergacor`];
-  const pickedCore=take(rajacuanCoreHashtags, rand(3,5));
-  const pickedPool=mix?take(hashtagsPool, rand(4,7)):[];
-  return shuffle([...pickedCore, ...gameTags, ...pickedPool]).slice(0, rand(7,10));
-}
-function buildTags(game,date){
-  const g=game.toLowerCase();
-  const base=[
-    'rajacuan','rajacuan mabar',`rajacuan live ${date.toLowerCase()}`,`rajacuan ${g}`,'rajacuan gacor',
-    'mabar rajacuan','jadwal live rajacuan','rajacuan terbaru','rajacuan resmi','rajacuan link',
-    'rajacuan game seru',`rajacuan ${g} tergacor`,`${g} gacor`,`${g} live`,
-    'mabar game online','rajacuan kompetitif','rajacuan turnamen','rajacuan main bareng',
-    `live ${g} rajacuan`,`streaming ${g} rajacuan`,`mabar ${g} hari ini`,
-  ];
-  return take(base, rand(12,18));
-}
-function buildDescription({game,date,link,forceHybrid}){
-  const mode = forceHybrid ? 'hybrid' : pick(['single','combo','hybrid']);
-  const cta = pick(ctaLines).replace('{LINK}', link);
-  const benefits = take(benefitsPool, rand(3,5)).map(b=>`- ${b}`).join('\n');
-  let body='';
-  if(mode==='single'){
-    body = pick(descriptionBlocks);
-  }else if(mode==='combo'){
-    const p1 = pick(descriptionBlocks); let p2 = pick(descriptionBlocks); let t=0;
-    while(p2===p1 && t++<5) p2 = pick(descriptionBlocks);
-    body = `${p1}\n\n${p2}`;
-  }else{
-    const header = `Rajacuan - Jadwal Live {DATE} Mabar Seru {GAME} Tergacor`;
-    body = `${header}\n\n${pick(descriptionBlocks)}`;
-  }
-  return body.replaceAll('{GAME}',game).replaceAll('{DATE}',date) + `\n\n${cta}\n\nKenapa main di Rajacuan:\n${benefits}`;
-}
-function generatePack({game,date,link,mixHashtag,forceHybrid}){
-  let title = pick(titleVariants).replace('{GAME}',game).replace('{DATE}',date);
-  title = limit(title, 100); // limit judul
-  const desc = buildDescription({game,date,link,forceHybrid});
-  const hashtags = buildHashtags(game, mixHashtag);
-  const tags = buildTags(game, date);
-  return { title, desc, hashtags, tags };
-}
+/* ====== BUILDERS (YouTube) ====== */
+function resolveGame(v){ if(!v) return null; const k=v.trim(); if(PRESETS[k.toLowerCase()]) return PRESETS[k.toLowerCase()]; if(NAME_TO_ALIAS[k.toLowerCase()]) return PRESETS[NAME_TO_ALIAS[k.toLowerCase()]]; const hit=Object.values(PRESETS).find(n=>n.toLowerCase().includes(k.toLowerCase())); return hit||k; }
+function buildHashtags(game,mix=true){ const g=game.replace(/\s+/g,''); const gameTags=[`#${g}`,`#${g}Tergacor`]; const pickedCore=take(rjCore,rand(3,5)); const pickedPool=mix?take(hashtagsPool,rand(4,7)):[]; return shuffle([...pickedCore,...gameTags,...pickedPool]).slice(0,rand(7,10)); }
+function buildTags(game,date){ const g=game.toLowerCase(); const base=['rajacuan','rajacuan mabar',`rajacuan live ${date.toLowerCase()}`,`rajacuan ${g}`,'rajacuan gacor','mabar rajacuan','jadwal live rajacuan','rajacuan terbaru','rajacuan resmi','rajacuan link','rajacuan game seru',`rajacuan ${g} tergacor`,`${g} gacor`,`${g} live`,'mabar game online','rajacuan kompetitif','rajacuan turnamen','rajacuan main bareng',`live ${g} rajacuan`,`streaming ${g} rajacuan`,`mabar ${g} hari ini`]; return take(base,rand(12,18)); }
+function buildDescription({game,date,link,forceHybrid}){ const mode=forceHybrid?'hybrid':pick(['single','combo','hybrid']); const cta=pick(ctaLines).replace('{LINK}',link); const benefits=take(benefitsPool,rand(3,5)).map(b=>`- ${b}`).join('\n'); let body=''; if(mode==='single'){ body=pick(descriptionBlocks); } else if(mode==='combo'){ const p1=pick(descriptionBlocks); let p2=pick(descriptionBlocks); let t=0; while(p2===p1 && t++<5) p2=pick(descriptionBlocks); body=`${p1}\n\n${p2}`; } else { const header='Rajacuan - Jadwal Live {DATE} Mabar Seru {GAME} Tergacor'; body=`${header}\n\n${pick(descriptionBlocks)}`; } return body.replaceAll('{GAME}',game).replaceAll('{DATE}',date)+`\n\n${cta}\n\nKenapa main di Rajacuan:\n${benefits}`; }
+function generatePack({game,date,link,mixHashtag,forceHybrid}){ let title=pick(titleVariants).replace('{GAME}',game).replace('{DATE}',date); title=limit(title,100); const desc=buildDescription({game,date,link,forceHybrid}); const hashtags=buildHashtags(game,mixHashtag); const tags=buildTags(game,date); return {title,desc,hashtags,tags}; }
 
-// ====== UI WIRING ======
-const el = sel=>document.querySelector(sel);
-const outEl = el('#out'); const statusEl = el('#status'); const aliasBox = el('#aliasBox');
+/* ====== UI: YouTube ====== */
+const $=s=>document.querySelector(s);
+const out=$('#out'), statusEl=$('#status'), aliasBox=$('#aliasBox');
+$('#btnList').onclick=()=>{ aliasBox.style.display=aliasBox.style.display==='none'?'block':'none'; aliasBox.innerHTML=`<h3 style="margin-top:0">Alias Game</h3><div class="mono">${Object.entries(PRESETS).sort((a,b)=>a[1].localeCompare(b[1])).map(([al,nm])=>`<code>${al}</code> — ${nm}`).join('<br>')}</div>`; };
+$('#btnClear').onclick=()=>{ out.innerHTML=''; statusEl.textContent='Output dibersihkan.'; };
+$('#btnCopyAll').onclick=()=>{ const text=[...out.querySelectorAll('.mono')].map(n=>n.textContent).join('\n'); navigator.clipboard.writeText(text).then(()=>statusEl.textContent='Semua output disalin.'); };
+$('#btnExport').onclick=()=>{ const text=[...out.querySelectorAll('.item')].map((card,i)=>{const t=card.querySelector('[id^="title-"]').textContent; const d=card.querySelector('[id^="desc-"]').textContent; const h=card.querySelector('[id^="hash-"]').textContent; const g=card.querySelector('[id^="tags-"]').textContent; return `Judul:\n${t}\n\nDeskripsi:\n${d}\n\nHashtag:\n${h}\n\nTags (CSV):\n${g}`;}).join('\n\n'); if(!text.trim()){statusEl.textContent='Belum ada output.';return;} const blob=new Blob([text],{type:'text/plain;charset=utf-8'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='rjc-pack.txt'; a.click(); URL.revokeObjectURL(url); };
+$('#btnExportCSV').onclick=()=>{ const cards=[...out.querySelectorAll('.item')]; if(!cards.length){statusEl.textContent='Belum ada output.';return;} const rows=cards.map((card,i)=>{ const title=card.querySelector('[id^="title-"]').textContent.replace(/"/g,'""'); const desc=card.querySelector('[id^="desc-"]').textContent.replace(/"/g,'""'); const hash=card.querySelector('[id^="hash-"]').textContent.replace(/"/g,'""'); const tags=card.querySelector('[id^="tags-"]').textContent.replace(/"/g,'""'); return `${i+1},"${title}","${desc}","${hash}","${tags}"`;}); const csv=['index,title,description,hashtags,tags',...rows].join('\n'); const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='rjc-pack.csv'; a.click(); URL.revokeObjectURL(url); };
 
-// Save/Load preferences
-function savePrefs(){
-  const data = {
-    game: el('#inpGame').value,
-    date: el('#inpDate').value,
-    link: el('#inpLink').value,
-    count: el('#inpCount').value,
-    mix: el('#chkMLPUBG').checked,
-    hybrid: el('#chkHybrid').checked,
-  };
-  localStorage.setItem('rjcPrefs', JSON.stringify(data));
-}
-function loadPrefs(){
-  try{
-    const p = JSON.parse(localStorage.getItem('rjcPrefs')||'{}');
-    if(p.game) el('#inpGame').value = p.game;
-    if(p.date) el('#inpDate').value = p.date;
-    if(p.link) el('#inpLink').value = p.link;
-    if(p.count) el('#inpCount').value = p.count;
-    if(typeof p.mix==='boolean') el('#chkMLPUBG').checked = p.mix;
-    if(typeof p.hybrid==='boolean') el('#chkHybrid').checked = p.hybrid;
-  }catch(e){}
-}
-window.addEventListener('load', loadPrefs);
-
-// Alias panel
-el('#btnList').onclick = ()=>{
-  aliasBox.style.display = aliasBox.style.display==='none' ? 'block' : 'none';
-  const list = Object.entries(PRESETS).sort((a,b)=>a[1].localeCompare(b[1]))
-    .map(([al,nm])=>`<code>${al}</code> — ${nm}`).join('<br>');
-  aliasBox.innerHTML = `<h3 style="margin-top:0">Alias Game</h3><div class="mono">${list}</div>`;
-};
-
-// Clear & Copy All
-el('#btnClear').onclick = ()=>{ outEl.innerHTML=''; statusEl.textContent='Output dibersihkan.'; };
-el('#btnCopyAll').onclick = ()=>{
-  const text = [...outEl.querySelectorAll('.mono')].map(n=>n.textContent).join('\n');
-  navigator.clipboard.writeText(text).then(()=>statusEl.textContent='Semua output disalin.');
-};
-
-// Export .txt
-el('#btnExport').onclick = ()=>{
-  const text = [...outEl.querySelectorAll('.mono')].map(n=>n.textContent).join('\n');
-  if(!text.trim()){ statusEl.textContent='Belum ada output.'; return; }
-  const blob = new Blob([text],{type:'text/plain;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'rjc-pack.txt'; a.click();
-  URL.revokeObjectURL(url);
-};
-
-// Export .csv
-el('#btnExportCSV').onclick = ()=>{
-  const cards = [...outEl.querySelectorAll('.item')];
-  if(!cards.length){ statusEl.textContent='Belum ada output.'; return; }
-  const rows = cards.map((card,i)=>{
-    const title = card.querySelector('[id^="title-"]').textContent.replace(/"/g,'""');
-    const desc  = card.querySelector('[id^="desc-"]').textContent.replace(/"/g,'""');
-    const hash  = card.querySelector('[id^="hash-"]').textContent.replace(/"/g,'""');
-    const tags  = card.querySelector('[id^="tags-"]').textContent.replace(/"/g,'""');
-    return `${i+1},"${title}","${desc}","${hash}","${tags}"`;
-  });
-  const header = 'index,title,description,hashtags,tags';
-  const csv = [header, ...rows].join('\n');
-  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url; a.download = 'rjc-pack.csv'; a.click();
-  URL.revokeObjectURL(url);
-};
-
-// Generate (single view + copy per-bagian)
-el('#btnGenerate').onclick = ()=>{
-  const gRaw = el('#inpGame').value.trim();
-  const date = el('#inpDate').value.trim() || 'Hari Ini';
-  const link = el('#inpLink').value.trim() || 'https://www.huntsvilleskiclub.org/';
-  const num = Math.max(1, parseInt(el('#inpCount').value||'1',10));
-  const mixHashtag = el('#chkMLPUBG').checked;
-  const forceHybrid = el('#chkHybrid').checked;
-
+$('#btnGenerate').onclick=()=>{
+  const gRaw=$('#inpGame').value.trim();
+  const date=$('#inpDate').value.trim()||'Hari Ini';
+  const link=$('#inpLink').value.trim()||'https://www.huntsvilleskiclub.org/';
+  const num=Math.max(1,parseInt($('#inpCount').value||'1',10));
+  const mixHashtag=$('#chkMLPUBG').checked;
+  const forceHybrid=$('#chkHybrid').checked;
   if(!gRaw){ statusEl.textContent='Isi Game dulu (alias atau nama).'; return; }
-  const game = resolveGame(gRaw);
-  statusEl.textContent = 'Generating...';
-
-  outEl.innerHTML='';
-  const blocks=[];
-
+  const game=resolveGame(gRaw);
+  statusEl.textContent='Generating...';
+  out.innerHTML='';
   for(let i=0;i<num;i++){
-    const pack = generatePack({game,date,link,mixHashtag,forceHybrid});
-
-    const copyAllText =
-`Judul:
-${pack.title}
-
-Deskripsi:
-${pack.desc}
-
-Hashtag:
-${pack.hashtags.join(' ')}
-
-Tags (CSV):
-${pack.tags.join(', ')}`;
-
-    const card = document.createElement('div');
-    card.className = 'item';
-    card.innerHTML = `
+    const p=generatePack({game,date,link,mixHashtag,forceHybrid});
+    const copyAllText=`Judul:\n${p.title}\n\nDeskripsi:\n${p.desc}\n\nHashtag:\n${p.hashtags.join(' ')}\n\nTags (CSV):\n${p.tags.join(', ')}`;
+    const card=document.createElement('div'); card.className='item';
+    card.innerHTML=`
       <div class="row" style="justify-content:space-between">
         <h3>Variasi #${i+1}</h3>
         <div class="row">
@@ -413,35 +236,120 @@ ${pack.tags.join(', ')}`;
       </div>
       <div class="sep"></div>
       <label>Judul</label>
-      <div class="mono" id="title-${i}">${pack.title}</div>
+      <div class="mono" id="title-${i}">${p.title}</div>
       <div class="sep"></div>
       <label>Deskripsi</label>
-      <div class="mono" id="desc-${i}">${pack.desc}</div>
+      <div class="mono" id="desc-${i}">${p.desc}</div>
       <div class="sep"></div>
       <label>Hashtag</label>
-      <div class="mono" id="hash-${i}">${pack.hashtags.join(' ')}</div>
+      <div class="mono" id="hash-${i}">${p.hashtags.join(' ')}</div>
       <div class="sep"></div>
       <label>Tags (CSV)</label>
-      <div class="mono" id="tags-${i}">${pack.tags.join(', ')}</div>
-    `;
-
-    card.querySelectorAll('[data-copy]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        let text=''; const type=btn.getAttribute('data-copy');
-        if(type==='title') text = card.querySelector(`#title-${i}`).textContent;
-        else if(type==='desc') text = card.querySelector(`#desc-${i}`).textContent;
-        else if(type==='hash') text = card.querySelector(`#hash-${i}`).textContent;
-        else if(type==='tags') text = card.querySelector(`#tags-${i}`).textContent;
-        else if(type==='all') text = copyAllText;
-        navigator.clipboard.writeText(text).then(()=>{ statusEl.textContent='Disalin.'; savePrefs(); });
-      });
-    });
-
-    outEl.appendChild(card);
-    blocks.push(copyAllText);
+      <div class="mono" id="tags-${i}">${p.tags.join(', ')}</div>`;
+    card.querySelectorAll('[data-copy]').forEach(btn=>btn.addEventListener('click',()=>{
+      const t=btn.getAttribute('data-copy');
+      let text='';
+      if(t==='title') text=card.querySelector(`#title-${i}`).textContent;
+      else if(t==='desc') text=card.querySelector(`#desc-${i}`).textContent;
+      else if(t==='hash') text=card.querySelector(`#hash-${i}`).textContent;
+      else if(t==='tags') text=card.querySelector(`#tags-${i}`).textContent;
+      else if(t==='all') text=copyAllText;
+      navigator.clipboard.writeText(text).then(()=>statusEl.textContent='Disalin.');
+    }));
+    out.appendChild(card);
   }
-
-  window.__lastOutput = blocks.join('\n\n');
-  statusEl.textContent = `Generated ${num} variasi untuk: ${game}`;
-  savePrefs();
+  statusEl.textContent=`Generated ${num} variasi untuk: ${game}`;
 };
+
+/* ====== ARTICLE MODE (Title + Slug + Meta) ====== */
+const art=sel=>document.querySelector(sel);
+const articleTitleTemplates=[
+  "{KW}: Panduan Lengkap {YEAR}",
+  "Tips & Strategi {KW} yang Wajib Dicoba {YEAR}",
+  "Cara Memilih {KW} Terbaik untuk Pemula",
+  "Rahasia Sukses {KW}: Mulai dari Nol",
+  "Checklist {KW} yang Efektif di {YEAR}",
+  "Kesalahan Umum di {KW} dan Cara Mengatasinya",
+  "Komplit! Rekomendasi {KW} Paling Worth It",
+  "{KW}: FAQ Paling Dicari (Dijawab Tuntas)",
+  "Roadmap {KW} dari Pemula Jadi Mahir",
+  "Update {YEAR}: Tren & Insight {KW} Terbaru"
+];
+const articleMetaTemplates=[
+  "Pelajari {KW} secara praktis: tips, strategi, dan panduan ringkas untuk hasil lebih konsisten. Cocok untuk pemula maupun pengguna berpengalaman.",
+  "Butuh arahan {KW}? Panduan singkat ini bahas langkah-langkah utama, kesalahan umum, dan rekomendasi agar proses makin efektif.",
+  "Ringkasan {KW} yang to the point: apa, kenapa penting, dan bagaimana memulainya dengan benar untuk menghindari trial & error."
+];
+const clampMeta=s=>{ const tight=art('#artTightMeta')?.checked; if(!tight) return s; if(s.length<=160) return s; const cut=s.slice(0,160); const last=cut.lastIndexOf(' '); return (last>120?cut.slice(0,last):cut).trim()+'…'; };
+const nowYear=new Date().getFullYear();
+const tPick=a=>a[Math.floor(Math.random()*a.length)];
+
+function generateArticlePairs(kw,n=10,withYear=true){
+  const YEAR=withYear?nowYear:"";
+  const list=[];
+  for(let i=0;i<n;i++){
+    let title=tPick(articleTitleTemplates).replaceAll('{KW}',kw).replaceAll('{YEAR}',YEAR);
+    if(title.length>80) title=title.slice(0,79)+'…';
+    let meta=clampMeta(tPick(articleMetaTemplates).replaceAll('{KW}',kw));
+    list.push({ title, slug: slugify(title), meta });
+  }
+  return list;
+}
+function renderArticlePairs(pairs){
+  const wrap=art('#articleOut'); wrap.innerHTML='';
+  pairs.forEach((it,i)=>{
+    const card=document.createElement('div'); card.className='item';
+    card.innerHTML=`
+      <div class="row" style="justify-content:space-between">
+        <h3>Artikel #${i+1}</h3>
+        <div class="row">
+          <button class="btn" data-copy="title">Copy Title</button>
+          <button class="btn" data-copy="slug">Copy Slug</button>
+          <button class="btn" data-copy="meta">Copy Meta</button>
+          <button class="btn ok" data-copy="all">Copy All</button>
+        </div>
+      </div>
+      <div class="sep"></div>
+      <label>Title</label>
+      <div class="mono" id="art-title-${i}">${it.title}</div>
+      <div class="sep"></div>
+      <label>Slug</label>
+      <div class="mono" id="art-slug-${i}">${it.slug}</div>
+      <div class="sep"></div>
+      <label>Meta Description</label>
+      <div class="mono" id="art-meta-${i}">${it.meta}</div>`;
+    card.querySelectorAll('[data-copy]').forEach(btn=>btn.addEventListener('click',()=>{
+      const t=btn.getAttribute('data-copy'); let text='';
+      if(t==='title') text=card.querySelector(`#art-title-${i}`).textContent;
+      else if(t==='slug') text=card.querySelector(`#art-slug-${i}`).textContent;
+      else if(t==='meta') text=card.querySelector(`#art-meta-${i}`).textContent;
+      else if(t==='all') text=`Title: ${it.title}\nSlug: ${it.slug}\nMeta: ${it.meta}`;
+      navigator.clipboard.writeText(text);
+      (art('#articleStatus')||{}).textContent='Disalin.';
+    }));
+    wrap.appendChild(card);
+  });
+}
+art('#btnArticleGen')?.addEventListener('click',()=>{
+  const kw=(art('#artKW').value||'').trim();
+  const n=Math.max(1,parseInt(art('#artCount').value||'10',10));
+  const withYear=!!art('#artAddYear').checked;
+  if(!kw){ (art('#articleStatus')||{}).textContent='Isi Target Keyword dulu.'; return; }
+  const pairs=generateArticlePairs(kw,n,withYear);
+  renderArticlePairs(pairs);
+  (art('#articleStatus')||{}).textContent=`Generated ${pairs.length} artikel untuk keyword: "${kw}"`;
+});
+art('#btnArticleClear')?.addEventListener('click',()=>{ art('#articleOut').innerHTML=''; (art('#articleStatus')||{}).textContent='Bersih.'; });
+art('#btnArticleExportCSV')?.addEventListener('click',()=>{
+  const cards=[...document.querySelectorAll('#articleOut .item')];
+  if(!cards.length){ (art('#articleStatus')||{}).textContent='Belum ada output.'; return; }
+  const rows=cards.map((c,i)=>{
+    const title=c.querySelector('[id^="art-title-"]').textContent.replace(/"/g,'""');
+    const slug=c.querySelector('[id^="art-slug-"]').textContent.replace(/"/g,'""');
+    const meta=c.querySelector('[id^="art-meta-"]').textContent.replace(/"/g,'""');
+    return `${i+1},"${title}","${slug}","${meta}"`;
+  });
+  const csv=['index,title,slug,meta_description',...rows].join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}); const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download='article-title-meta.csv'; a.click(); URL.revokeObjectURL(url);
+});
