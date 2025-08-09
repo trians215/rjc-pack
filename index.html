@@ -94,6 +94,44 @@
   </div>
 </div>
 
+<!-- ===== ARTICLE: Title + Meta Description Generator ===== -->
+<div class="card" style="margin-top:16px">
+  <div class="row" style="justify-content:space-between;">
+    <h2 style="margin:0;font-size:16px">Article: Title + Meta Description</h2>
+    <div class="row">
+      <button id="btnArticleExportCSV" class="btn">Export Article .csv</button>
+      <button id="btnArticleClear" class="btn ghost">Clear</button>
+    </div>
+  </div>
+
+  <div class="grid cols-3" style="margin-top:12px">
+    <div>
+      <label>Target Keyword</label>
+      <input id="artKW" type="text" placeholder='mis: "mobile legends mabar seru"' />
+      <div class="hint">Dipakai untuk mengganti <code>{KW}</code> di template.</div>
+    </div>
+    <div>
+      <label>Jumlah Variasi</label>
+      <input id="artCount" type="number" min="1" value="10" />
+    </div>
+    <div>
+      <label>Opsi</label>
+      <div class="row">
+        <label class="pill"><input id="artAddYear" type="checkbox" style="margin-right:8px">Tambahkan tahun otomatis</label>
+        <label class="pill"><input id="artTightMeta" type="checkbox" style="margin-right:8px" checked>Meta 150–160 chars</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:12px">
+    <button id="btnArticleGen" class="btn primary">Generate Article Titles</button>
+    <span id="articleStatus" class="hint"></span>
+  </div>
+
+  <div id="articleOut" class="out" style="margin-top:12px"></div>
+</div>
+
+
 <script src="generator.js?v=1"></script>
 </body>
 </html>
