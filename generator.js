@@ -445,3 +445,144 @@ ${pack.tags.join(', ')}`;
   statusEl.textContent = `Generated ${num} variasi untuk: ${game}`;
   savePrefs();
 };
+
+/* ================= ARTICLE MODE: Title + Meta ================= */
+const art = sel => document.querySelector(sel);
+
+// Template judul (gunakan {KW} & {YEAR})
+const articleTitleTemplates = [
+  "{KW}: Panduan Lengkap {YEAR}",
+  "Tips & Strategi {KW} yang Wajib Dicoba {YEAR}",
+  "Cara Memilih {KW} Terbaik untuk Pemula",
+  "Rahasia Sukses {KW}: Mulai dari Nol",
+  "Checklist {KW} yang Efektif di {YEAR}",
+  "Kesalahan Umum di {KW} dan Cara Mengatasinya",
+  "Komplit! Rekomendasi {KW} Paling Worth It",
+  "{KW}: FAQ Paling Dicari (Dijawab Tuntas)",
+  "Roadmap {KW} dari Pemula Jadi Mahir",
+  "Update {YEAR}: Tren & Insight {KW} Terbaru"
+];
+
+// Template meta (150–160 chars ideal)
+const articleMetaTemplates = [
+  "Pelajari {KW} secara praktis: tips, strategi, dan panduan ringkas untuk hasil lebih konsisten. Cocok untuk pemula maupun pengguna berpengalaman.",
+  "Butuh arahan {KW}? Panduan singkat ini bahas langkah-langkah utama, kesalahan umum, dan rekomendasi agar proses makin efektif.",
+  "Ringkasan {KW} yang to the point: apa, kenapa penting, dan bagaimana memulainya dengan benar untuk menghindari trial & error."
+];
+
+// Helpers
+const slugify = s => s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+const clampMeta = (s) => {
+  // rapihin meta: target 150–160; kalau checkbox artTightMeta aktif, paksa potong
+  const tight = art('#artTightMeta')?.checked;
+  if (!tight) return s;
+  if (s.length <= 160) return s;
+  // potong di spasi terdekat <160 biar enak dibaca
+  const cut = s.slice(0, 160);
+  const lastSpace = cut.lastIndexOf(' ');
+  return (lastSpace > 120 ? cut.slice(0, lastSpace) : cut).trim() + '…';
+};
+const nowYear = new Date().getFullYear();
+const tPick = arr => arr[Math.floor(Math.random()*arr.length)];
+
+// Generate n variasi
+function generateArticlePairs(kw, n=10, withYear=true){
+  const YEAR = withYear ? nowYear : "";
+  const list = [];
+  for (let i=0;i<n;i++){
+    let title = tPick(articleTitleTemplates)
+      .replaceAll('{KW}', kw)
+      .replaceAll('{YEAR}', YEAR);
+    // Limit judul biar rapi (YouTube limit 100, artikel bebas; kita pakai 70-80 SEO-friendly)
+    if (title.length > 80) title = title.slice(0, 79) + '…';
+
+    let meta = tPick(articleMetaTemplates).replaceAll('{KW}', kw);
+    meta = clampMeta(meta);
+
+    list.push({
+      title,
+      slug: slugify(title),
+      meta
+    });
+  }
+  return list;
+}
+
+// Render ke UI
+function renderArticlePairs(pairs){
+  const wrap = art('#articleOut');
+  wrap.innerHTML = '';
+  pairs.forEach((it, i) => {
+    const card = document.createElement('div');
+    card.className = 'item';
+    card.innerHTML = `
+      <div class="row" style="justify-content:space-between">
+        <h3>Artikel #${i+1}</h3>
+        <div class="row">
+          <button class="btn" data-copy="title">Copy Title</button>
+          <button class="btn" data-copy="slug">Copy Slug</button>
+          <button class="btn" data-copy="meta">Copy Meta</button>
+          <button class="btn ok" data-copy="all">Copy All</button>
+        </div>
+      </div>
+      <div class="sep"></div>
+      <label>Title</label>
+      <div class="mono" id="art-title-${i}">${it.title}</div>
+      <div class="sep"></div>
+      <label>Slug</label>
+      <div class="mono" id="art-slug-${i}">${it.slug}</div>
+      <div class="sep"></div>
+      <label>Meta Description</label>
+      <div class="mono" id="art-meta-${i}">${it.meta}</div>
+    `;
+    // copy handlers
+    card.querySelectorAll('[data-copy]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const t = btn.getAttribute('data-copy');
+        let text = '';
+        if (t==='title') text = card.querySelector(`#art-title-${i}`).textContent;
+        else if (t==='slug') text = card.querySelector(`#art-slug-${i}`).textContent;
+        else if (t==='meta') text = card.querySelector(`#art-meta-${i}`).textContent;
+        else if (t==='all') {
+          text = `Title: ${it.title}\nSlug: ${it.slug}\nMeta: ${it.meta}`;
+        }
+        navigator.clipboard.writeText(text);
+        (art('#articleStatus')||{}).textContent = 'Disalin.';
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+
+// Wire buttons
+art('#btnArticleGen')?.addEventListener('click', ()=>{
+  const kw = (art('#artKW').value||'').trim();
+  const n  = Math.max(1, parseInt(art('#artCount').value||'10',10));
+  const withYear = !!art('#artAddYear').checked;
+  if (!kw) { (art('#articleStatus')||{}).textContent = 'Isi Target Keyword dulu.'; return; }
+  const pairs = generateArticlePairs(kw, n, withYear);
+  renderArticlePairs(pairs);
+  (art('#articleStatus')||{}).textContent = `Generated ${pairs.length} artikel untuk keyword: "${kw}"`;
+});
+
+// Clear & Export CSV
+art('#btnArticleClear')?.addEventListener('click', ()=>{
+  art('#articleOut').innerHTML = '';
+  (art('#articleStatus')||{}).textContent = 'Bersih.';
+});
+art('#btnArticleExportCSV')?.addEventListener('click', ()=>{
+  const cards = [...document.querySelectorAll('#articleOut .item')];
+  if (!cards.length){ (art('#articleStatus')||{}).textContent='Belum ada output.'; return; }
+  const rows = cards.map((c,i)=>({
+    title: c.querySelector('[id^="art-title-"]').textContent.replace(/"/g,'""'),
+    slug:  c.querySelector('[id^="art-slug-"]').textContent.replace(/"/g,'""'),
+    meta:  c.querySelector('[id^="art-meta-"]').textContent.replace(/"/g,'""'),
+    idx: i+1
+  }));
+  const header = 'index,title,slug,meta_description';
+  const csv = [header, ...rows.map(r=>`${r.idx},"${r.title}","${r.slug}","${r.meta}"`)].join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = 'article-title-meta.csv'; a.click();
+  URL.revokeObjectURL(url);
+});
