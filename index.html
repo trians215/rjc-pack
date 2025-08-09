@@ -193,6 +193,26 @@
       display: block
     }
 
+    /* small helper */
+    .chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap
+    }
+
+    .chip {
+      padding: 6px 10px;
+      border: 1px solid #273048;
+      border-radius: 999px;
+      background: #0e1220;
+      color: #c9d7ff;
+      font-size: 12px
+    }
+
+    .muted {
+      color: #94a3b8
+    }
+
     @media (max-width:900px) {
 
       .grid.cols-3,
@@ -273,43 +293,69 @@
     <!-- ARTICLE TAB -->
     <div id="tab-article" class="tab">
       <div class="card">
-        <div class="grid cols-3">
+        <div class="row" style="justify-content:space-between;">
           <div>
-            <label>Target Keyword</label>
-            <input id="artKW" type="text" placeholder='mis: "mobile legends mabar seru"' />
-            <div class="hint">Dipakai untuk mengganti <code>{KW}</code> di template.</div>
+            <h2 style="margin:0;font-size:16px">Artikel Mode — Variasi Title & Deskripsi (Discovery)</h2>
+            <div class="hint">Generator variasi narasi smooth untuk game populer. Gunakan placeholder bank & randomizer.
+            </div>
           </div>
+          <div class="chips">
+            <div class="chip">Title+Desc CSV</div>
+            <div class="chip">Randomizer</div>
+            <div class="chip">Preview</div>
+          </div>
+        </div>
+
+        <div class="grid cols-3" style="margin-top:12px">
           <div>
             <label>Jumlah Variasi</label>
-            <input id="artCount" type="number" min="1" value="10" />
+            <input id="artBulkCount" type="number" min="1" value="200" />
+            <div class="hint">Saran: 100–1000 per batch.</div>
+          </div>
+          <div>
+            <label>Batas Preview di Layar</label>
+            <input id="artPreviewLimit" type="number" min="10" value="50" />
+            <div class="hint">Hanya untuk tampilan. CSV tetap full.</div>
           </div>
           <div>
             <label>Opsi</label>
             <div class="row">
-              <label class="pill"><input id="artAddYear" type="checkbox" style="margin-right:8px">Tambahkan tahun
-                otomatis</label>
-              <label class="pill"><input id="artTightMeta" type="checkbox" style="margin-right:8px" checked>Meta 150–160
-                chars</label>
+              <label><input id="artMixGames" type="checkbox" checked style="margin-right:8px">Campur banyak game</label>
+              <label><input id="artShuffle" type="checkbox" checked style="margin-right:8px">Acak maksimal</label>
             </div>
           </div>
         </div>
 
+        <div class="grid cols-2" style="margin-top:12px">
+          <div>
+            <label>Pilih Game (pisahkan koma) — optional</label>
+            <input id="artGames" type="text" placeholder="kosongkan untuk pakai daftar default" />
+            <div class="hint">Contoh: Mahjong Ways 2, Starlight Princess, PUBG Mobile</div>
+          </div>
+          <div>
+            <label>Seed (opsional)</label>
+            <input id="artSeed" type="text" placeholder="angka/teks untuk seed random" />
+            <div class="hint">Isi seed untuk replikasi hasil yang sama.</div>
+          </div>
+        </div>
+
         <div class="row" style="margin-top:12px">
-          <button id="btnArticleGen" class="btn primary">Generate Article Titles</button>
-          <button id="btnArticleExportCSV" class="btn">Export Article .csv</button>
-          <button id="btnArticleClear" class="btn ghost">Clear</button>
-          <span id="articleStatus" class="hint"></span>
+          <button id="btnArticleBulkGen" class="btn primary">Generate Variasi & Preview</button>
+          <button id="btnArticleBulkCSV" class="btn">Download CSV (Title,Description)</button>
+          <button id="btnArticleBulkClear" class="btn ghost">Clear</button>
+          <span id="articleBulkStatus" class="hint"></span>
         </div>
       </div>
 
       <div class="card" style="margin-top:16px">
-        <h2 style="margin:0 0 12px 0;font-size:16px">Output Artikel (Title + Slug + Meta)</h2>
-        <div id="articleOut" class="out"></div>
+        <h2 style="margin:0 0 12px 0;font-size:16px">Preview (Title + Description)</h2>
+        <div id="articleBulkOut" class="out"></div>
+        <div class="muted" id="articleBulkNote" style="margin-top:8px"></div>
       </div>
     </div>
   </div>
 
-  <script src="generator.js?v=tab1"></script>
+  <script src="generator.js?v=bulk1"></script>
   <script>
     // Simple tab switcher
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -318,7 +364,6 @@
         btn.classList.add('active');
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
         document.querySelector(btn.dataset.target).classList.add('active');
-        // optional: scroll to top of active tab
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     });
